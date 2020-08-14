@@ -1,0 +1,28 @@
+FROM ubuntu:18.04
+
+RUN apt-get update -y \
+    && apt-get install -y apt-utils \
+    && apt-get install -y --no-install-recommends \
+    build-essential \
+    lld-10 \
+    cmake \
+    ninja-build \
+    clangd-10 \
+    clang-10 \
+    clang-format-10 \
+    clang-tidy-10 \
+    pkg-config \
+    gdb \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-10 30 && \
+    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-7 20 && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-10 30 && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-7 20 && \
+    update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-10 30 && \
+    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-10 30 && \
+    update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-10 30 && \
+    update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-10 30 && \
+    update-alternatives --install /usr/bin/ld ld /usr/bin/ld.lld-10 30 && \
+    update-alternatives --install /usr/bin/ld ld /usr/bin/ld.gold 20 && \
+    update-alternatives --install /usr/bin/ld ld /usr/bin/ld.bfd 10
